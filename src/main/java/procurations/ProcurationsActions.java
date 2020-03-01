@@ -9,9 +9,11 @@ public interface ProcurationsActions {
 
     ProcurationsActions setType(String name, List<String> permisions, State state);
 
-    ProcurationsActions addPrincipalClient();
+    ProcurationsActions addPrincipalClient(int clientId);
 
-    ProcurationsActions addAtterneyClient();
+    ProcurationsActions addAtterneyClient(int clientId);
 
-    Procuration create();
+    Procuration getProcurationInstance();
+
+    ProcurationsActions store();
 }

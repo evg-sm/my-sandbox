@@ -1,11 +1,11 @@
-DROP TABLE IF EXISTS public.client;
+DROP TABLE IF EXISTS client;
 
-CREATE TABLE public.client (
-                          id INT AUTO_INCREMENT  PRIMARY KEY,
-                          name VARCHAR(250) NOT NULL
+CREATE TABLE client (
+    id INT AUTO_INCREMENT  PRIMARY KEY,
+    name VARCHAR(250) NOT NULL
 );
 
-INSERT INTO public.client (name)
+INSERT INTO client (name)
 VALUES ('Koji'),
        ('Billy'),
        ('Ben'),
@@ -13,16 +13,16 @@ VALUES ('Koji'),
        ('Solomon'),
        ('Vasyanya');
 
-DROP TABLE IF EXISTS test_tab;
+DROP TABLE IF EXISTS procuration;
 
-CREATE TABLE test_tab (
+CREATE TABLE procuration (
   id INT AUTO_INCREMENT  PRIMARY KEY,
-  first_name VARCHAR(250) NOT NULL,
-  last_name VARCHAR(250) NOT NULL,
-  career VARCHAR(250) DEFAULT NULL
+  name VARCHAR(250) NOT NULL,
+  state VARCHAR(250) NOT NULL,
+  account DECIMAL NOT NULL,
+  permissions VARCHAR(250) DEFAULT NULL,
+  p_client_id INT DEFAULT NULL,
+  p_client_name VARCHAR(250) DEFAULT NULL,
+  a_client_id INT DEFAULT NULL,
+  a_client_name VARCHAR(250) DEFAULT NULL
 );
-
-INSERT INTO test_tab (first_name, last_name, career) VALUES
-  ('Aliko', 'Dangote', 'Billionaire Industrialist'),
-  ('Bill', 'Gates', 'Billionaire Tech Entrepreneur'),
-  ('Folrunsho', 'Alakija', 'Billionaire Oil Magnate');
