@@ -1,48 +1,52 @@
 package procurations;
 
-import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.stereotype.Service;
 import procurations.dto.Client;
 import procurations.dto.Procuration;
-import procurations.dto.ProcurationDto;
+import procurations.dto.State;
+
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.List;
 
 import static java.lang.Integer.parseInt;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 
-public class AccountProcuration extends Procuration implements ProcurationsActions {
-//    private ProcurationDto procurationDto;
-//
-//    private ProcurationDto getProcurationDto() {
-//        if (procurationDto != null) {
-//            return procurationDto;
-//        } else {
-//            return new ProcurationDto();
-//        }
-//    }
+@Service
+public class AccountProcuration implements ProcurationsActions {
+
+    private Procuration procuration;
+
+    @Override
+    public AccountProcuration setType(String name, List<String> permisions, State state) {
+        procuration = new Procuration(name, permisions, state);
+        return this;
+    }
 
     @Override
     public ProcurationsActions addPrincipalClient() {
-        procurationDto = getProcuration();
-        getProcuration().setPrincipalClient(
+        procuration.setPrincipalClient(
                 Client.builder()
                         .id(parseInt(randomNumeric(3)))
-                        .name(RandomStringUtils.randomAlphabetic(10))
+                        .name(randomAlphabetic(10))
                         .build());
+        procuration.setAccount(new BigDecimal(randomNumeric(20)));
         return this;
     }
 
     @Override
     public ProcurationsActions addAtterneyClient() {
-        procurationDto = getProcuration();
-        procurationDto.setAtterneyClient(
+        procuration.setAtterneyClient(
                 Client.builder()
                         .id(parseInt(randomNumeric(3)))
-                        .name(RandomStringUtils.randomAlphabetic(10))
+                        .name(randomAlphabetic(10))
                         .build());
         return this;
     }
 
     @Override
-    public ProcurationDto create() {
-        return getProcuration();
+    public Procuration create() {
+        return procuration;
     }
 }
