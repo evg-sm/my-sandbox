@@ -5,13 +5,12 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import procurations.dto.Client;
+import procurations.model.Client;
 
 import java.util.List;
 
-@Component
+@Repository
 public class ClientRepository {
 
     private static final RowMapper<Client> ROW_MAPPER = BeanPropertyRowMapper.newInstance(Client.class);

@@ -20,7 +20,7 @@ CREATE TABLE procuration (
   name VARCHAR(250) NOT NULL,
   state VARCHAR(250) NOT NULL,
   account DECIMAL NOT NULL,
-  permissions VARCHAR(250) DEFAULT NULL,
+  action INT DEFAULT NULL,
   p_client_id INT DEFAULT NULL,
   p_client_name VARCHAR(250) DEFAULT NULL,
   a_client_id INT DEFAULT NULL,

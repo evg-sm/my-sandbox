@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
-import procurations.dto.Procuration;
+import procurations.model.Procuration;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class ProcurationRepository {
                 .addValue("name", procuration.getName())
                 .addValue("state", procuration.getState())
                 .addValue("account", procuration.getAccount())
-                .addValue("permissions", procuration.getPermissions())
+                .addValue("action", procuration.getAction())
                 .addValue("p_client_id", procuration.getPrincipalClient().getId())
                 .addValue("p_client_name", procuration.getPrincipalClient().getName())
                 .addValue("a_client_id", procuration.getAtterneyClient().getId())

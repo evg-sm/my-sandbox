@@ -1,4 +1,4 @@
-package procurations.dto;
+package procurations.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

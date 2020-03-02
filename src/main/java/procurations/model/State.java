@@ -1,4 +1,4 @@
-package procurations.dto;
+package procurations.model;
 
 public enum State {
     OPEN,
