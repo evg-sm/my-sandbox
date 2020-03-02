@@ -14,7 +14,7 @@ import java.util.List;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 
 @Service
-public class AccountProcurationService implements ProcurationsActions {
+public class AccountProcurationFactory implements ProcurationsActions {
 
     private Procuration procuration;
 
@@ -25,7 +25,7 @@ public class AccountProcurationService implements ProcurationsActions {
     ProcurationRepository procurationRepository;
 
     @Override
-    public AccountProcurationService setType(String name, List<String> permisions, State state) {
+    public AccountProcurationFactory setType(String name, List<String> permisions, State state) {
         procuration = new Procuration(name, permisions, state);
         return this;
     }
