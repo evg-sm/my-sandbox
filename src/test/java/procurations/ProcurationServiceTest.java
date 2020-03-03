@@ -10,6 +10,9 @@ import procurations.model.Procuration;
 import procurations.model.State;
 import procurations.service.ProcurationService;
 
+import java.util.NoSuchElementException;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static procurations.Matcher.ProcurationMatcher.assertMatch;
 
 @SpringBootTest
@@ -35,5 +38,10 @@ public class ProcurationServiceTest {
         log.info("Created procuration is {}", actualProcuration);
         assertMatch(actualProcuration, expectedProcuration);
         log.info("##### test result ######");
+    }
+
+    @Test
+    public void notFoundTest() {
+        assertThrows(NoSuchElementException.class, () -> procurationService.get(-1));
     }
 }
