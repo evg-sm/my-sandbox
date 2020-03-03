@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
-import procurations.model.Procuration;
+import procurations.model.ProcurationDto;
 
 import java.util.List;
 
@@ -29,25 +29,25 @@ public class ProcurationRepository {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
-    public Procuration insert(Procuration procuration) {
+    public ProcurationDto insert(ProcurationDto procurationDto) {
         MapSqlParameterSource map = new MapSqlParameterSource()
-                .addValue("id", procuration.getId())
-                .addValue("name", procuration.getName())
-                .addValue("state", procuration.getState())
-                .addValue("account", procuration.getAccount())
-                .addValue("action", procuration.getAction())
-                .addValue("p_client_id", procuration.getPrincipalClient().getId())
-                .addValue("p_client_name", procuration.getPrincipalClient().getName())
-                .addValue("a_client_id", procuration.getAtterneyClient().getId())
-                .addValue("a_client_name", procuration.getAtterneyClient().getName());
+                .addValue("id", procurationDto.getId())
+                .addValue("name", procurationDto.getName())
+                .addValue("state", procurationDto.getState())
+                .addValue("account", procurationDto.getAccount())
+                .addValue("action", procurationDto.getAction())
+                .addValue("p_client_id", procurationDto.getPrincipalClient().getClientId())
+                .addValue("p_client_name", procurationDto.getPrincipalClient().getTranslitName())
+                .addValue("a_client_id", procurationDto.getAttorneyClient().getClientId())
+                .addValue("a_client_name", procurationDto.getAttorneyClient().getTranslitName());
         Number newId = insertProcuration.executeAndReturnKey(map);
-        procuration.setId(newId.intValue());
-        return procuration;
+        procurationDto.setId(newId.intValue());
+        return procurationDto;
     }
 
-    public Procuration getSingleProcurationById(int id) {
-        List<Procuration> procurations = jdbcTemplate.query(
+    public ProcurationDto getSingleProcurationById(int id) {
+        List<ProcurationDto> procurationDtos = jdbcTemplate.query(
                 "SELECT * FROM procuration WHERE ID = ?", ROW_MAPPER, id);
-        return DataAccessUtils.singleResult(procurations);
+        return DataAccessUtils.singleResult(procurationDtos);
     }
 }

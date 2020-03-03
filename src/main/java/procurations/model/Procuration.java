@@ -1,6 +1,11 @@
 package procurations.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 
@@ -11,17 +16,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class Procuration {
-    public int id;
-    public String name;
-    public State state;
-    public BigDecimal account;
-    public Integer action;
-    public Client principalClient;
-    public Client atterneyClient;
-
-    public Procuration(String name, Integer action, State state) {
-        this.name = name;
-        this.action = action;
-        this.state = state;
-    }
+    private int principalClientId;
+    private int attorneyClientId;
+    private BigDecimal account;
+    private int action;
+    private State state;
 }

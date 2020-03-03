@@ -26,7 +26,7 @@ public class ClientRepository {
 
     public Client getSingleClientById(int id) {
         List<Client> meals = jdbcTemplate.query(
-                "SELECT * FROM CLIENT WHERE ID = ?", ROW_MAPPER, id);
+                "SELECT * FROM CLIENT WHERE CLIENT_ID = ?", ROW_MAPPER, id);
         return DataAccessUtils.singleResult(meals);
     }
 }
