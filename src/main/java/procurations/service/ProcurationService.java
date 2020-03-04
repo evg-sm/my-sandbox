@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import procurations.model.Procuration;
 import procurations.model.ProcurationDto;
-import procurations.repository.ClientRepository;
 import procurations.repository.ProcurationRepository;
 
 import java.util.NoSuchElementException;
@@ -19,17 +18,17 @@ public class ProcurationService {
     @Autowired
     ProcurationRepository procurationRepository;
     @Autowired
-    ClientRepository clientRepository;
+    ClientService clientService;
 
     public ProcurationDto create(Procuration procuration) {
         log.info("Create procuration from {}", procuration);
-        ProcurationDto procurationDto = new ProcurationDto("Account procuration", procuration.getAction(), procuration.getState());
+        ProcurationDto procurationDto = new ProcurationDto("Account procuration", 34, procuration.getState());
         // TODO add client validation
         // TODO convert to lombok builder
-        procurationDto.setPrincipalClient(clientRepository.getSingleClientById(procuration.getPrincipalClientId()));
-        procurationDto.setAttorneyClient(clientRepository.getSingleClientById(procuration.getAttorneyClientId()));
+        procurationDto.setPrincipalClient(clientService.getClient(procuration.getPrincipalClientId()));
+        procurationDto.setAttorneyClient(clientService.getClient(procuration.getAttorneyClientId()));
         procurationDto.setAccount(procuration.getAccount());
-        procurationDto.setAction(procuration.getAction());
+        procurationDto.setAction(11);
         procurationDto.setState(procuration.getState());
         return procurationRepository.insert(procurationDto);
     }

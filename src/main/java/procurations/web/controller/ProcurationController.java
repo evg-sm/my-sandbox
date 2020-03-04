@@ -7,6 +7,8 @@ import procurations.model.Procuration;
 import procurations.model.ProcurationDto;
 import procurations.service.ProcurationService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = ProcurationController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProcurationController {
@@ -17,7 +19,7 @@ public class ProcurationController {
     ProcurationService procurationService;
 
     @PostMapping("/create")
-    public ProcurationDto createByType(@RequestBody Procuration procuration) {
+    public ProcurationDto createByType(@Valid @RequestBody Procuration procuration) {
         return procurationService.create(procuration);
     }
 
