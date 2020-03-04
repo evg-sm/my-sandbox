@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import procurations.exception.ClientNotFoundException;
+import procurations.model.Client;
 import procurations.model.Procuration;
 import procurations.model.ProcurationDto;
 import procurations.repository.ProcurationRepository;
@@ -22,11 +24,21 @@ public class ProcurationService {
 
     public ProcurationDto create(Procuration procuration) {
         log.info("Create procuration from {}", procuration);
+        Client principalClient = Optional.ofNullable(clientService.getClient(procuration.getPrincipalClientId()))
+                .orElseThrow(() -> {
+                    log.info("Client with id {} not found", procuration.getPrincipalClientId());
+                    return new ClientNotFoundException("Principal client not found");
+                });
+        Client attorneyClient = Optional.ofNullable(clientService.getClient(procuration.getAttorneyClientId()))
+                .orElseThrow(() -> {
+                    log.info("Client with id {} not found", procuration.getAttorneyClientId());
+                    return new ClientNotFoundException("Attorney client not found");
+                });
+
         ProcurationDto procurationDto = new ProcurationDto("Account procuration", 34, procuration.getState());
-        // TODO add client validation
-        // TODO convert to lombok builder
-        procurationDto.setPrincipalClient(clientService.getClient(procuration.getPrincipalClientId()));
-        procurationDto.setAttorneyClient(clientService.getClient(procuration.getAttorneyClientId()));
+        // TODO convert to lombok builder ?
+        procurationDto.setPrincipalClient(principalClient);
+        procurationDto.setAttorneyClient(attorneyClient);
         procurationDto.setAccount(procuration.getAccount());
         procurationDto.setAction(11);
         procurationDto.setState(procuration.getState());
