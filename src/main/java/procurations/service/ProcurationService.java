@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import procurations.exception.NotFoundException;
 import procurations.model.Client;
-import procurations.model.Procuration;
 import procurations.model.ProcurationDto;
+import procurations.model.Procuration;
 import procurations.repository.ProcurationRepository;
 
 import java.util.Optional;
@@ -21,30 +21,30 @@ public class ProcurationService {
     @Autowired
     ClientService clientService;
 
-    public ProcurationDto create(Procuration procuration) {
-        log.info("Create procuration from {}", procuration);
-        Client principalClient = Optional.ofNullable(clientService.getClient(procuration.getPrincipalClientId()))
+    public Procuration create(ProcurationDto procurationDto) {
+        log.info("Create procuration from {}", procurationDto);
+        Client principalClient = Optional.ofNullable(clientService.getClient(procurationDto.getPrincipalClientId()))
                 .orElseThrow(() -> {
-                    log.info("Client with id {} not found", procuration.getPrincipalClientId());
+                    log.info("Client with id {} not found", procurationDto.getPrincipalClientId());
                     return new NotFoundException("Principal client not found");
                 });
-        Client attorneyClient = Optional.ofNullable(clientService.getClient(procuration.getAttorneyClientId()))
+        Client attorneyClient = Optional.ofNullable(clientService.getClient(procurationDto.getAttorneyClientId()))
                 .orElseThrow(() -> {
-                    log.info("Client with id {} not found", procuration.getAttorneyClientId());
+                    log.info("Client with id {} not found", procurationDto.getAttorneyClientId());
                     return new NotFoundException("Attorney client not found");
                 });
 
-        ProcurationDto procurationDto = new ProcurationDto("Account procuration", 34, procuration.getState());
+        Procuration procuration = new Procuration("Account procuration", 34, procurationDto.getState());
         // TODO convert to lombok builder ?
-        procurationDto.setPrincipalClient(principalClient);
-        procurationDto.setAttorneyClient(attorneyClient);
-        procurationDto.setAccount(procuration.getAccount());
-        procurationDto.setAction(11);
-        procurationDto.setState(procuration.getState());
-        return procurationRepository.insert(procurationDto);
+        procuration.setPrincipalClient(principalClient);
+        procuration.setAttorneyClient(attorneyClient);
+        procuration.setAccount(procurationDto.getAccount());
+        procuration.setAction(11);
+        procuration.setState(procurationDto.getState());
+        return procurationRepository.insert(procuration);
     }
 
-    public ProcurationDto get(int id) {
+    public Procuration get(int id) {
         log.info("Get procuration by id {}", id);
         return Optional.ofNullable(procurationRepository.getSingleProcurationById(id))
                 .orElseThrow(() -> {

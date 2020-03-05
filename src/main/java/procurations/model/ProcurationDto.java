@@ -1,27 +1,28 @@
 package procurations.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 
-@Getter
-@Setter
-@ToString
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class ProcurationDto {
-    public int id;
-    public String name;
-    public State state;
-    public BigDecimal account;
-    public Integer action;
-    public Client principalClient;
-    public Client attorneyClient;
-
-    public ProcurationDto(String name, Integer action, State state) {
-        this.name = name;
-        this.action = action;
-        this.state = state;
-    }
+    @Min(value = 1, message = "principalClientId is required")
+    private long principalClientId;
+    @Min(value = 1, message = "attorneyClientId is required")
+    private int attorneyClientId;
+    @NotNull(message = "account is required")
+    private BigDecimal account;
+    @NotNull(message = "actions is required")
+    private List<Integer> action;
+    @NotNull(message = "state is required")
+    private State state;
 }

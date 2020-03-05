@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import procurations.model.Client;
-import procurations.model.Procuration;
 import procurations.model.ProcurationDto;
+import procurations.model.Procuration;
 import procurations.model.State;
 import procurations.service.ProcurationService;
 
@@ -19,10 +19,9 @@ import java.util.Collections;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static procurations.Matcher.ProcurationMatcher.assertMatch;
 
 @SpringBootTest
-public class ProcurationDtoServiceTest {
+public class ProcurationServiceTest {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -33,7 +32,7 @@ public class ProcurationDtoServiceTest {
     @Test
     public void createProcurationTest() {
         log.info("##### test result ######");
-        ProcurationDto expectedProcurationDto = ProcurationDto.builder()
+        Procuration expectedProcuration = Procuration.builder()
                 .id(1)
                 .name("Account procuration")
                 .state(State.OPEN)
@@ -67,7 +66,7 @@ public class ProcurationDtoServiceTest {
                         .phone("926-000-00-02")
                         .build())
                 .build();
-        log.info("Expected procuration is {}", expectedProcurationDto);
+        log.info("Expected procuration is {}", expectedProcuration);
 //        ProcurationDto actualProcurationDto = procurationService.create(95);
 //        log.info("Created procuration is {}", actualProcurationDto);
 //        assertMatch(actualProcurationDto, expectedProcurationDto);
@@ -82,13 +81,13 @@ public class ProcurationDtoServiceTest {
     @Test
     @SneakyThrows
     public void serialize() {
-        Procuration procuration = Procuration.builder()
+        ProcurationDto procurationDto = ProcurationDto.builder()
                 .principalClientId(11111)
                 .attorneyClientId(22222222)
                 .account(new BigDecimal("123123123213123123"))
                 .state(State.OPEN)
                 .action(Collections.singletonList(11))
                 .build();
-        log.info(objectMapper.writeValueAsString(procuration));
+        log.info(objectMapper.writeValueAsString(procurationDto));
     }
 }

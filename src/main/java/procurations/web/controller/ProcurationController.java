@@ -3,8 +3,8 @@ package procurations.web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import procurations.model.Procuration;
 import procurations.model.ProcurationDto;
+import procurations.model.Procuration;
 import procurations.service.ProcurationService;
 
 import javax.validation.Valid;
@@ -19,12 +19,12 @@ public class ProcurationController {
     ProcurationService procurationService;
 
     @PostMapping("/create")
-    public ProcurationDto createByType(@Valid @RequestBody Procuration procuration) {
-        return procurationService.create(procuration);
+    public Procuration createByType(@Valid @RequestBody ProcurationDto procurationDto) {
+        return procurationService.create(procurationDto);
     }
 
     @GetMapping("/get/{id}")
-    public ProcurationDto get(@PathVariable int id) {
+    public Procuration get(@PathVariable int id) {
         return procurationService.get(id);
     }
 }
