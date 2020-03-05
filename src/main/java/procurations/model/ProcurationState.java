@@ -1,6 +1,6 @@
 package procurations.model;
 
-public enum State {
+public enum ProcurationState {
     OPEN,
     CLOSED,
     EXPIRED;

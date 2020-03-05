@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import procurations.model.Client;
 import procurations.model.ProcurationDto;
 import procurations.model.Procuration;
-import procurations.model.State;
+import procurations.model.ProcurationState;
 import procurations.service.ProcurationService;
 
 import java.math.BigDecimal;
@@ -35,7 +35,7 @@ public class ProcurationServiceTest {
         Procuration expectedProcuration = Procuration.builder()
                 .id(1)
                 .name("Account procuration")
-                .state(State.OPEN)
+                .procurationState(ProcurationState.OPEN)
                 .action(95)
                 .principalClient(Client.builder()
                         .clientId(1)
@@ -85,7 +85,7 @@ public class ProcurationServiceTest {
                 .principalClientId(11111)
                 .attorneyClientId(22222222)
                 .account(new BigDecimal("123123123213123123"))
-                .state(State.OPEN)
+                .state(ProcurationState.OPEN)
                 .action(Collections.singletonList(11))
                 .build();
         log.info(objectMapper.writeValueAsString(procurationDto));

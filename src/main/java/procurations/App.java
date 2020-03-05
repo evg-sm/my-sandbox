@@ -12,6 +12,7 @@ public class App {
         // TODO test app with docker db2
         // TODO make in memory db only for tests
         // TODO generic interface ???
+        // TODO transactional
         SpringApplication.run(App.class, args);
     }
 }

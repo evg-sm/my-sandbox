@@ -24,5 +24,5 @@ public class ProcurationDto {
     @NotNull(message = "actions is required")
     private List<Integer> action;
     @NotNull(message = "state is required")
-    private State state;
+    private ProcurationState state;
 }

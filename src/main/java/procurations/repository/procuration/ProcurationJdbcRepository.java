@@ -1,4 +1,4 @@
-package procurations.repository;
+package procurations.repository.procuration;
 
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,7 +11,7 @@ import procurations.model.Procuration;
 import java.util.List;
 
 @Repository
-public class ProcurationRepository {
+public class ProcurationJdbcRepository implements ProcurationRepository {
 
     private static final ProcurationMapper ROW_MAPPER = new ProcurationMapper();
 
@@ -21,7 +21,7 @@ public class ProcurationRepository {
 
     private final SimpleJdbcInsert insertProcuration;
 
-    public ProcurationRepository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public ProcurationJdbcRepository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.insertProcuration = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("procuration")
                 .usingGeneratedKeyColumns("id");
@@ -29,11 +29,19 @@ public class ProcurationRepository {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
-    public Procuration insert(Procuration procuration) {
+    @Override
+    public Procuration get(int id) {
+        List<Procuration> procurations = jdbcTemplate.query(
+                "SELECT * FROM procuration WHERE ID = ?", ROW_MAPPER, id);
+        return DataAccessUtils.singleResult(procurations);
+    }
+
+    @Override
+    public Procuration save(Procuration procuration) {
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", procuration.getId())
                 .addValue("name", procuration.getName())
-                .addValue("state", procuration.getState())
+                .addValue("state", procuration.getProcurationState())
                 .addValue("account", procuration.getAccount())
                 .addValue("action", procuration.getAction())
                 .addValue("p_client_id", procuration.getPrincipalClient().getClientId())
@@ -45,9 +53,9 @@ public class ProcurationRepository {
         return procuration;
     }
 
-    public Procuration getSingleProcurationById(int id) {
-        List<Procuration> procurations = jdbcTemplate.query(
-                "SELECT * FROM procuration WHERE ID = ?", ROW_MAPPER, id);
-        return DataAccessUtils.singleResult(procurations);
+    @Override
+    public boolean delete(int id) {
+        // TODO implement
+        return false;
     }
 }

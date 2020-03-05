@@ -1,9 +1,9 @@
-package procurations.repository;
+package procurations.repository.procuration;
 
 import org.springframework.jdbc.core.RowMapper;
 import procurations.model.Client;
 import procurations.model.Procuration;
-import procurations.model.State;
+import procurations.model.ProcurationState;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +14,7 @@ public class ProcurationMapper implements RowMapper<Procuration> {
 
         procuration.setId(rs.getInt("id"));
         procuration.setName(rs.getString("name"));
-        procuration.setState(State.valueOf(rs.getString("state")));
+        procuration.setProcurationState(ProcurationState.valueOf(rs.getString("state")));
         procuration.setAccount(rs.getBigDecimal("account"));
         procuration.setAction(rs.getInt("action"));
 

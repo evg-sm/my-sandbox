@@ -1,4 +1,4 @@
-package procurations.repository;
+package procurations.repository.client;
 
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -11,7 +11,7 @@ import procurations.model.Client;
 import java.util.List;
 
 @Repository
-public class ClientRepository {
+public class ClientJdbcRepository implements ClientRepository {
 
     private static final RowMapper<Client> ROW_MAPPER = BeanPropertyRowMapper.newInstance(Client.class);
 
@@ -19,12 +19,13 @@ public class ClientRepository {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public ClientRepository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public ClientJdbcRepository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
-    public Client getSingleClientById(long clientId) {
+    @Override
+    public Client get(long clientId) {
         List<Client> meals = jdbcTemplate.query(
                 "SELECT * FROM CLIENT WHERE CLIENT_ID = ?", ROW_MAPPER, clientId);
         return DataAccessUtils.singleResult(meals);

@@ -8,7 +8,7 @@ import procurations.exception.NotFoundException;
 import procurations.model.Client;
 import procurations.model.ProcurationDto;
 import procurations.model.Procuration;
-import procurations.repository.ProcurationRepository;
+import procurations.repository.procuration.ProcurationJdbcRepository;
 
 import java.util.Optional;
 
@@ -17,7 +17,7 @@ public class ProcurationService {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    ProcurationRepository procurationRepository;
+    ProcurationJdbcRepository procurationJdbcRepository;
     @Autowired
     ClientService clientService;
 
@@ -40,13 +40,13 @@ public class ProcurationService {
         procuration.setAttorneyClient(attorneyClient);
         procuration.setAccount(procurationDto.getAccount());
         procuration.setAction(11);
-        procuration.setState(procurationDto.getState());
-        return procurationRepository.insert(procuration);
+        procuration.setProcurationState(procurationDto.getState());
+        return procurationJdbcRepository.save(procuration);
     }
 
     public Procuration get(int id) {
         log.info("Get procuration by id {}", id);
-        return Optional.ofNullable(procurationRepository.getSingleProcurationById(id))
+        return Optional.ofNullable(procurationJdbcRepository.get(id))
                 .orElseThrow(() -> {
                     log.info("Client with id {} not found", id);
                     return new NotFoundException("Procuration not found");
