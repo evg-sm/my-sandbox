@@ -7,6 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class App {
 
     public static void main(String[] args) {
+        // TODO db current structure
+        // TODO procuration repository save
+        // TODO test app with docker db2
+        // TODO make in memory db only for tests
+        // TODO generic interface ???
         SpringApplication.run(App.class, args);
     }
 }
