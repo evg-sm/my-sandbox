@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public class ProcurationJdbcRepository implements ProcurationRepository {
 
-    private static final ProcurationMapper ROW_MAPPER = new ProcurationMapper();
+    private static final ProcurationMapper PROCURATION_MAPPER = new ProcurationMapper();
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -32,7 +32,7 @@ public class ProcurationJdbcRepository implements ProcurationRepository {
     @Override
     public Procuration get(int id) {
         List<Procuration> procurations = jdbcTemplate.query(
-                "SELECT * FROM procuration WHERE ID = ?", ROW_MAPPER, id);
+                "SELECT * FROM procuration WHERE ID = ?", PROCURATION_MAPPER, id);
         return DataAccessUtils.singleResult(procurations);
     }
 

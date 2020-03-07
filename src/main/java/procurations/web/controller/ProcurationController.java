@@ -23,7 +23,7 @@ public class ProcurationController {
         return procurationService.create(procurationDto);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     public Procuration get(@PathVariable int id) {
         return procurationService.get(id);
     }

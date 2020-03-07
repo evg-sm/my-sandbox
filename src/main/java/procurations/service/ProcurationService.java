@@ -5,9 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import procurations.exception.NotFoundException;
-import procurations.model.Client;
-import procurations.model.ProcurationDto;
 import procurations.model.Procuration;
+import procurations.model.ProcurationDto;
 import procurations.repository.procuration.ProcurationJdbcRepository;
 
 import java.util.Optional;
@@ -23,21 +22,10 @@ public class ProcurationService {
 
     public Procuration create(ProcurationDto procurationDto) {
         log.info("Create procuration from {}", procurationDto);
-        Client principalClient = Optional.ofNullable(clientService.getClient(procurationDto.getPrincipalClientId()))
-                .orElseThrow(() -> {
-                    log.info("Client with id {} not found", procurationDto.getPrincipalClientId());
-                    return new NotFoundException("Principal client not found");
-                });
-        Client attorneyClient = Optional.ofNullable(clientService.getClient(procurationDto.getAttorneyClientId()))
-                .orElseThrow(() -> {
-                    log.info("Client with id {} not found", procurationDto.getAttorneyClientId());
-                    return new NotFoundException("Attorney client not found");
-                });
-
         Procuration procuration = new Procuration("Account procuration", 34, procurationDto.getState());
         // TODO convert to lombok builder ?
-        procuration.setPrincipalClient(principalClient);
-        procuration.setAttorneyClient(attorneyClient);
+        procuration.setPrincipalClient(clientService.get(procurationDto.getPrincipalClientId()));
+        procuration.setAttorneyClient(clientService.get(procurationDto.getAttorneyClientId()));
         procuration.setAccount(procurationDto.getAccount());
         procuration.setAction(11);
         procuration.setProcurationState(procurationDto.getState());
@@ -48,8 +36,8 @@ public class ProcurationService {
         log.info("Get procuration by id {}", id);
         return Optional.ofNullable(procurationJdbcRepository.get(id))
                 .orElseThrow(() -> {
-                    log.info("Client with id {} not found", id);
-                    return new NotFoundException("Procuration not found");
+                    log.info("Procuration with id {} not found", id);
+                    return new NotFoundException("Procuration with id " + id + " not found");
                 });
     }
 }

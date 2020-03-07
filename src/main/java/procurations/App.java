@@ -13,6 +13,7 @@ public class App {
         // TODO make in memory db only for tests
         // TODO generic interface ???
         // TODO transactional
+        // TODO fix procuration service tests
         SpringApplication.run(App.class, args);
     }
 }

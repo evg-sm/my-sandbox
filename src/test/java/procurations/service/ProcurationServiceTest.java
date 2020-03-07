@@ -1,4 +1,4 @@
-package procurations;
+package procurations.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -11,7 +11,6 @@ import procurations.model.Client;
 import procurations.model.ProcurationDto;
 import procurations.model.Procuration;
 import procurations.model.ProcurationState;
-import procurations.service.ProcurationService;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -30,7 +29,7 @@ public class ProcurationServiceTest {
     ObjectMapper objectMapper;
 
     @Test
-    public void createProcurationTest() {
+    void createProcurationTest() {
         log.info("##### test result ######");
         Procuration expectedProcuration = Procuration.builder()
                 .id(1)
