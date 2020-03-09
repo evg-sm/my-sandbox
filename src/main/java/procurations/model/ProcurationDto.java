@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -20,9 +19,9 @@ public class ProcurationDto {
     @Min(value = 1, message = "attorneyClientId is required")
     private int attorneyClientId;
     @NotNull(message = "account is required")
-    private BigDecimal account;
+    private String account;
     @NotNull(message = "actions is required")
-    private List<Integer> action;
+    private Set<Integer> actions;
     @NotNull(message = "state is required")
     private ProcurationState state;
 }

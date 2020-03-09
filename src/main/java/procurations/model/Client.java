@@ -31,7 +31,7 @@ public class Client {
     private String mobilePhone;
     private String passSerie;
     private String passNum;
-    private String passIsuer;
+    private String passIssuer;
     private LocalDate passDate;
     private boolean resident;
     private LocalDateTime lastModified;

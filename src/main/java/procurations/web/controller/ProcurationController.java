@@ -20,7 +20,7 @@ public class ProcurationController {
 
     @PostMapping("/create")
     public Procuration createByType(@Valid @RequestBody ProcurationDto procurationDto) {
-        return procurationService.create(procurationDto);
+        return procurationService.save(procurationDto);
     }
 
     @GetMapping("/{id}")

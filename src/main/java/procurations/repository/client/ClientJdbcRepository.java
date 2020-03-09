@@ -24,8 +24,9 @@ public class ClientJdbcRepository implements ClientRepository {
 
     @Override
     public Client get(long clientId) {
-        List<Client> meals = jdbcTemplate.query(
-                "SELECT * FROM CLIENT WHERE CLIENT_ID = ?", CLIENT_MAPPER, clientId);
-        return DataAccessUtils.singleResult(meals);
+        List<Client> clients = jdbcTemplate.query(
+                "SELECT CLIENT_ID, BRANCH_ID, EMPLOYER_ID, CATEGORY_ID, FIRST_NAME, MIDDLE_NAME, LAST_NAME, TRANSLIT_NAME, DOB, POB, EMAIL, HAS_EMAIL_SUBSCRIPTION, LEGAL_ADDRESS, INN, PHONE, MOBILE_PHONE,\n" +
+                        " PASS_SERIE, PASS_NUM, PASS_ISSUER, PASS_DATE, RESIDENT, LASTMODIFIED, REGION_CODE, BUNDLE_CODE, IS_COMPLIANCE, IS_PEP, CURRENT_ADDRESS FROM CLIENT WHERE CLIENT_ID = ?", CLIENT_MAPPER, clientId);
+        return DataAccessUtils.singleResult(clients);
     }
 }

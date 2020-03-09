@@ -30,7 +30,7 @@ public class ClientMapper implements RowMapper<Client> {
         client.setMobilePhone(rs.getString("MOBILE_PHONE"));
         client.setPassSerie(rs.getString("PASS_SERIE"));
         client.setPassNum(rs.getString("PASS_NUM"));
-        client.setPassIsuer(rs.getString("PASS_ISSUER"));
+        client.setPassIssuer(rs.getString("PASS_ISSUER"));
         client.setPassDate(LocalDate.parse(rs.getString("PASS_DATE")));
         client.setResident("Y".equals(rs.getString("RESIDENT")));
         client.setLastModified(rs.getTimestamp("LASTMODIFIED").toLocalDateTime());

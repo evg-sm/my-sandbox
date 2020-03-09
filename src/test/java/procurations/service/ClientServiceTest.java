@@ -42,7 +42,7 @@ class ClientServiceTest {
                 .mobilePhone("+7-926-000-00-01")
                 .passSerie("XXX")
                 .passNum("XXXXXX")
-                .passIsuer("YYYYYYYYYY")
+                .passIssuer("YYYYYYYYYY")
                 .passDate(LocalDate.of(2000, 05, 30))
                 .resident(true)
                 .lastModified(of(2020, Month.JANUARY, 30, 10, 00))

@@ -32,9 +32,9 @@ public class ProcurationServiceTest {
     void createProcurationTest() {
         log.info("##### test result ######");
         Procuration expectedProcuration = Procuration.builder()
-                .id(1)
+                .poaId(1)
                 .name("Account procuration")
-                .procurationState(ProcurationState.OPEN)
+                .procurationState(ProcurationState.ACTIVE)
                 .action(95)
                 .principalClient(Client.builder()
                         .clientId(1)
@@ -84,8 +84,8 @@ public class ProcurationServiceTest {
                 .principalClientId(11111)
                 .attorneyClientId(22222222)
                 .account(new BigDecimal("123123123213123123"))
-                .state(ProcurationState.OPEN)
-                .action(Collections.singletonList(11))
+                .state(ProcurationState.ACTIVE)
+                .actions(Collections.singletonList(11))
                 .build();
         log.info(objectMapper.writeValueAsString(procurationDto));
     }
