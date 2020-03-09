@@ -3,10 +3,7 @@ package procurations.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import procurations.ProcurationTestData;
 import procurations.exception.NotFoundException;
 import procurations.model.Procuration;
@@ -22,9 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static procurations.Matcher.ProcurationMatcher.assertMatch;
 import static procurations.ProcurationTestData.getProcuration;
 
-@SpringBootTest
-public class ProcurationServiceTest {
-    private final Logger log = LoggerFactory.getLogger(getClass());
+public class ProcurationServiceTest extends AbstractServiceTest {
 
     @Autowired
     ProcurationService procurationService;
