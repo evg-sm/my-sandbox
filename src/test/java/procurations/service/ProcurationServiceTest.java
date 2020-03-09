@@ -7,17 +7,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import procurations.model.Client;
-import procurations.model.ProcurationDto;
+import procurations.ProcurationTestData;
+import procurations.exception.NotFoundException;
 import procurations.model.Procuration;
+import procurations.model.ProcurationDto;
 import procurations.model.ProcurationState;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.NoSuchElementException;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.HashSet;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
+import static procurations.Matcher.ProcurationMatcher.assertMatch;
+import static procurations.ProcurationTestData.getProcuration;
 
 @SpringBootTest
 public class ProcurationServiceTest {
@@ -29,63 +32,103 @@ public class ProcurationServiceTest {
     ObjectMapper objectMapper;
 
     @Test
-    void createProcurationTest() {
-        log.info("##### test result ######");
-        Procuration expectedProcuration = Procuration.builder()
-                .poaId(1)
-                .name("Account procuration")
-                .procurationState(ProcurationState.ACTIVE)
-                .action(95)
-                .principalClient(Client.builder()
-                        .clientId(1)
-                        .branchId(200)
-                        .categoryId(70)
-                        .firstName("Koji")
-                        .middleName("K")
-                        .lastName("Fokusima")
-                        .translitName("Koji K Fokusima")
-                        .dob(LocalDate.of(1980, 5, 30))
-                        .pob("Fokusima")
-                        .email("1@mail.ru")
-                        .legalAddress("address1")
-                        .phone("926-000-00-01")
-                        .build())
-                .attorneyClient(Client.builder()
-                        .clientId(2)
-                        .branchId(200)
-                        .categoryId(50)
-                        .firstName("Billy")
-                        .middleName("F")
-                        .lastName("Smith")
-                        .translitName("Billy F Smith")
-                        .dob(LocalDate.of(2000, 5, 30))
-                        .pob("New York")
-                        .email("2@mail.ru")
-                        .legalAddress("address2")
-                        .phone("926-000-00-02")
-                        .build())
-                .build();
-        log.info("Expected procuration is {}", expectedProcuration);
-//        ProcurationDto actualProcurationDto = procurationService.create(95);
-//        log.info("Created procuration is {}", actualProcurationDto);
-//        assertMatch(actualProcurationDto, expectedProcurationDto);
-        log.info("##### test result ######");
+    void saveWithActiveTest() {
+        Procuration created = procurationService.save(ProcurationTestData.getProcurationDto(ProcurationState.ACTIVE));
+        Procuration actual = procurationService.get(created.getPoaId());
+        log.info("Expected procuration {}", getProcuration(ProcurationState.ACTIVE));
+        log.info("Actual procuration   {}", actual);
+        assertMatch(actual, getProcuration(ProcurationState.ACTIVE));
+        assertTrue(actual.getCreateDate().isBefore(LocalDateTime.now()));
+        assertTrue(actual.getStartDate().isBefore(LocalDate.now()));
+        assertTrue(actual.getExpirationDate().isAfter(LocalDate.now()));
+        assertNull(actual.getCancelDate());
+        assertNull(actual.getDeleteDate());
     }
 
     @Test
-    public void notFoundTest() {
-        assertThrows(NoSuchElementException.class, () -> procurationService.get(-1));
+    void saveWithDeletedTest() {
+        Procuration created = procurationService.save(ProcurationTestData.getProcurationDto(ProcurationState.DELETED));
+        Procuration actual = procurationService.get(created.getPoaId());
+        log.info("Expected procuration {}", getProcuration(ProcurationState.DELETED));
+        log.info("Actual procuration   {}", actual);
+        assertMatch(actual, getProcuration(ProcurationState.DELETED));
+        assertTrue(actual.getCreateDate().isBefore(LocalDateTime.now()));
+        assertTrue(actual.getStartDate().isBefore(LocalDate.now()));
+        assertTrue(actual.getExpirationDate().isAfter(LocalDate.now()));
+        assertNull(actual.getCancelDate());
+        assertTrue(actual.getDeleteDate().isBefore(LocalDate.now()));
+    }
+
+    @Test
+    void saveWithExpiredTest() {
+        Procuration created = procurationService.save(ProcurationTestData.getProcurationDto(ProcurationState.EXPIRED));
+        Procuration actual = procurationService.get(created.getPoaId());
+        log.info("Expected procuration {}", getProcuration(ProcurationState.EXPIRED));
+        log.info("Actual procuration   {}", actual);
+        assertMatch(actual, getProcuration(ProcurationState.EXPIRED));
+        assertTrue(actual.getCreateDate().isBefore(LocalDateTime.now()));
+        assertTrue(actual.getStartDate().isBefore(LocalDate.now()));
+        assertTrue(actual.getExpirationDate().isBefore(LocalDate.now()));
+        assertNull(actual.getCancelDate());
+        assertNull(actual.getDeleteDate());
+    }
+
+    @Test
+    void saveWithCancelledTest() {
+        Procuration created = procurationService.save(ProcurationTestData.getProcurationDto(ProcurationState.CANCELLED));
+        Procuration actual = procurationService.get(created.getPoaId());
+        log.info("Expected procuration {}", getProcuration(ProcurationState.CANCELLED));
+        log.info("Actual procuration   {}", actual);
+        assertMatch(actual, getProcuration(ProcurationState.CANCELLED));
+        assertTrue(actual.getCreateDate().isBefore(LocalDateTime.now()));
+        assertTrue(actual.getStartDate().isBefore(LocalDate.now()));
+        assertTrue(actual.getExpirationDate().isAfter(LocalDate.now()));
+        assertTrue(actual.getCancelDate().isBefore(LocalDate.now()));
+        assertNull(actual.getDeleteDate());
+    }
+
+    @Test
+    void saveWithNotStartedTest() {
+        Procuration created = procurationService.save(ProcurationTestData.getProcurationDto(ProcurationState.NOT_STARTED));
+        Procuration actual = procurationService.get(created.getPoaId());
+        log.info("Expected procuration {}", getProcuration(ProcurationState.NOT_STARTED));
+        log.info("Actual procuration   {}", actual);
+        assertMatch(actual, getProcuration(ProcurationState.NOT_STARTED));
+        assertTrue(actual.getCreateDate().isBefore(LocalDateTime.now()));
+        assertTrue(actual.getStartDate().isAfter(LocalDate.now()));
+        assertTrue(actual.getExpirationDate().isAfter(LocalDate.now()));
+        assertNull(actual.getCancelDate());
+        assertNull(actual.getDeleteDate());
+    }
+
+    @Test
+    void getNotFoundTest() {
+        assertThrows(NotFoundException.class, () -> procurationService.get(-1));
+    }
+
+    @Test
+    void deleteTest() {
+        Procuration created = procurationService.save(ProcurationTestData.getProcurationDto(ProcurationState.ACTIVE));
+        Procuration actual = procurationService.get(created.getPoaId());
+        assertNotNull(actual);
+        procurationService.delete(created.getPoaId());
+        assertThrows(NotFoundException.class, () -> procurationService.delete(created.getPoaId()));
+    }
+
+    @Test
+    void deleteNotFoundTest() {
+        assertThrows(NotFoundException.class, () -> procurationService.delete(-1));
     }
 
     @Test
     @SneakyThrows
-    public void serialize() {
+    void serialize() {
         ProcurationDto procurationDto = ProcurationDto.builder()
                 .principalClientId(11111)
                 .attorneyClientId(22222222)
-                .account(new BigDecimal("123123123213123123"))
+                .account("12312312")
                 .state(ProcurationState.ACTIVE)
-                .actions(Collections.singletonList(11))
+                .actions(new HashSet<>(Arrays.asList(11, 22)))
                 .build();
         log.info(objectMapper.writeValueAsString(procurationDto));
     }

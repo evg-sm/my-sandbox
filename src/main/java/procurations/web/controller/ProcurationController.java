@@ -1,6 +1,7 @@
 package procurations.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import procurations.model.ProcurationDto;
@@ -26,5 +27,11 @@ public class ProcurationController {
     @GetMapping("/{id}")
     public Procuration get(@PathVariable int id) {
         return procurationService.get(id);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable int id) {
+        procurationService.delete(id);
     }
 }

@@ -107,7 +107,7 @@ public class ProcurationJdbcRepository implements ProcurationRepository {
     @Override
     @Transactional
     public boolean delete(int id) {
-        // TODO implement
-        return false;
+        return jdbcTemplate.update("DELETE FROM POA WHERE POA_ID=?", id) != 0
+                && jdbcTemplate.update("DELETE FROM PROCURATION WHERE POA_ID=?", id) != 0;
     }
 }

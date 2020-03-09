@@ -18,7 +18,7 @@ public class ProcurationMapper implements RowMapper<Procuration> {
         procuration.setBranchRef(rs.getString("BRANCH_REF"));
 
         procuration.setPrincipalCnum(rs.getInt("PRINCIPAL_CNUM"));
-        procuration.setPrincipalFioEng(rs.getString("PRINCIPAL_FIO_RUS"));
+        procuration.setPrincipalFioRus(rs.getString("PRINCIPAL_FIO_RUS"));
         procuration.setPrincipalFioEng(rs.getString("PRINCIPAL_FIO_ENG"));
         procuration.setPrincipalDocType(rs.getString("PRINCIPAL_DOCTYPE"));
         procuration.setPrincipalDocSer(rs.getString("PRINCIPAL_DOC_SER"));
