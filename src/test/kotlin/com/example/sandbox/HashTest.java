@@ -156,7 +156,6 @@ public class HashTest {
     @Test
     void test_00() {
         Map<String, String> map = new TreeMap<>();
-//        map.
     }
 
     public int index(String key, int n) {
@@ -183,12 +182,11 @@ public class HashTest {
             System.out.println(iterator.next());
         }
         set.forEach(System.out::println);
-//        set.forEach(e -> set.remove(e)); // ConcurrentModificationException
     }
 
     @Test
-    void testLinkedHashMap() {
-        Map<String, String> map = new HashMap<>();
+    void testLinkedHashMapOrder() {
+        Map<String, String> map = new LinkedHashMap<>();
         map.put("one", "one");
         map.put("two", "two");
         map.put("three", "three");
@@ -197,22 +195,6 @@ public class HashTest {
         map.forEach((key, value) -> System.out.println(key));
         map.forEach((key, value) -> System.out.println(value));
     }
-
-    @Test
-    void generateUUID() {
-        System.out.println(UUID.randomUUID());
-    }
-
-    @Test
-    void testByteArrayWithMap() {
-        byte[] array1 = new byte[1];
-        byte[] array2 = new byte[1];
-
-        System.out.println(array1.equals(array2));
-        System.out.println(array1.hashCode());
-        System.out.println(array2.hashCode());
-    }
-
 }
 
 class Data {
