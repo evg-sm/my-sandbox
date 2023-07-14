@@ -2,7 +2,7 @@ package com.example.sandbox;
 
 import org.junit.jupiter.api.Test;
 
-public class RecTest {
+public class RecursionTest {
 
     @Test
     void test_01() {

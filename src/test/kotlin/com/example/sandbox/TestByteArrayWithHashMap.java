@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestByteArrayWithMap {
+public class TestByteArrayWithHashMap {
 
     @Test
     void testWithReference() {
