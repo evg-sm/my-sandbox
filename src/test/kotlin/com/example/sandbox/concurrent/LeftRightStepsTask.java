@@ -59,7 +59,7 @@ public class LeftRightStepsTask {
                     stepHolder.count.getAndIncrement();
 
                     try {
-                        stepHolder.notifyAll();
+                        stepHolder.notify();
                         stepHolder.wait();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -95,7 +95,7 @@ public class LeftRightStepsTask {
                     stepHolder.count.getAndIncrement();
 
                     try {
-                        stepHolder.notifyAll();
+                        stepHolder.notify();
                         stepHolder.wait();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
