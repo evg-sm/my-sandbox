@@ -1,4 +1,4 @@
-package com.example.sandbox;
+package com.example.sandbox.hashmap;
 
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestByteArrayWithHashMap {
+public class ByteArrayAsKey {
 
     @Test
     void testWithReference() {
@@ -19,6 +19,14 @@ public class TestByteArrayWithHashMap {
         String mapValue = map.get(array1);
 
         assertNotNull(mapValue);
+    }
+
+    @Test
+    void testAnalogByteArray() {
+        Map<byte[], String> map = new HashMap<>();
+        map.put( new byte[1], "some value");
+
+        assertNull(map.get(new byte[1]));
     }
 
     @Test
