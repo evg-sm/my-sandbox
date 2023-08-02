@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DeadLockTask {
+public class DeadLockTaskV1 {
 
     private final AtomicInteger atomicInteger = new AtomicInteger(1);
 

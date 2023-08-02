@@ -2,9 +2,7 @@ package com.example.sandbox.hashmap;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -22,6 +20,13 @@ public class MutableObjectAsKey {
 
     @Test
     void testWithMutation() {
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+
+        list.add(1, 0);
+
         Map<DataKey, String> map = new HashMap<>();
         DataKey dataKey = new DataKey(1, "initial name");
         map.put(dataKey, "some value");
