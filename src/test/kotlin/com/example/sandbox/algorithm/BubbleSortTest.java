@@ -4,13 +4,13 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-public class BubbleSort {
+public class BubbleSortTest {
 
     @Test
     void bubbleSort() {
-        int[] sortArr = {12, 6, 4, 1, 15, 10};
-        bubbleSort(sortArr);
-        System.out.println(Arrays.toString(sortArr));
+        int[] arrayForSort = {12, 6, 4, 1, 15, 10};
+        bubbleSort(arrayForSort);
+        System.out.println(Arrays.toString(arrayForSort));
     }
 
     public static void bubbleSort(int[] sortArr){
