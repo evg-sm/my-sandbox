@@ -10,7 +10,7 @@ import kotlin.reflect.jvm.jvmName
 
 @EnableScheduling
 @SpringBootApplication
-class SandboxApplication
+open class SandboxApplication
 
 val logger: KLogger = NamedKLogging(SandboxApplication::class.jvmName).logger
 

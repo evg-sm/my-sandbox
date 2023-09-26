@@ -6,8 +6,9 @@ import org.junit.jupiter.api.Test;
 import java.util.concurrent.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class CreateNewThreadTask {
+public class CreateNewThreadTaskTest {
 
     @Test
     void letsCreateAsThread() {
@@ -22,8 +23,20 @@ public class CreateNewThreadTask {
     }
 
     @Test
-    void letsCreateAsRunnable() {
+    void letsCreateAsRunnable1() {
         new Thread(new SomeRunnable()).start();
+    }
+
+    @Test
+    void letsCreateAsRunnableAsLambda() {
+        new Thread(() -> System.out.println("!")).start();
+    }
+
+    @Test
+    void letsSeeWhatReturnsRunnable() throws ExecutionException, InterruptedException {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<?> future = executorService.submit(new SomeRunnable());
+        assertNull(future.get());
     }
 
     static class SomeRunnable implements Runnable {
