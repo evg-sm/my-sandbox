@@ -22,7 +22,7 @@ public class AppendTest {
     void test2() {
         List<Integer> integers = List.of(1, 2, 3, 4, 5, 6, 7, 8);
 
-        var res = integers.stream().map(i -> Integer.toString(i)).toList();
+        var res = integers.stream().map(i -> Integer.toString(i)).collect(Collectors.toList());
 
         System.out.println(res);
     }
