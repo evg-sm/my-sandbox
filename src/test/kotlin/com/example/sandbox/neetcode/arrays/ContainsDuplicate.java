@@ -1,4 +1,4 @@
-package com.example.sandbox.leetcode.arrays;
+package com.example.sandbox.neetcode.arrays;
 
 import org.junit.jupiter.api.Test;
 

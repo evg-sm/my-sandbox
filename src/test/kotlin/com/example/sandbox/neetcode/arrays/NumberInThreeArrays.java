@@ -1,4 +1,4 @@
-package com.example.sandbox.leetcode.arrays;
+package com.example.sandbox.neetcode.arrays;
 
 import org.junit.jupiter.api.Test;
 
@@ -40,4 +40,16 @@ public class NumberInThreeArrays {
         int[] a3 = {2, 3, 4, 5, 6};
         System.out.println(findNumber1(a1, a2, a3));
     }
+
+
+    class User {
+        private int age;
+        private String name;
+
+        public void check(int id) {
+            int methodPrimitive = 1;
+        }
+    }
 }
+
+
