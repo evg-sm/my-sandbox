@@ -1,12 +1,13 @@
-package com.example.sandbox.investor;
+package com.example.sandbox.investor.java;
+
+import com.example.sandbox.investor.java.Investor;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.TreeMap;
 
 public class InvestorStorage {
 
-    private Map<Long, Investor> storage = new TreeMap<>();
+    private final Map<Long, Investor> storage = new TreeMap<>();
 
     {
         storage.put(1L, new Investor("name 1", 1L));

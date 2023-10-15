@@ -1,4 +1,4 @@
-package com.example.sandbox.investor;
+package com.example.sandbox.investor.java;
 
 import org.jetbrains.annotations.NotNull;
 
